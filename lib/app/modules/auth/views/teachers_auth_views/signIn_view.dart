@@ -1,19 +1,69 @@
 import 'package:aplication/app/constans/app_colors.dart';
 import 'package:aplication/app/constans/app_text.dart';
 import 'package:aplication/app/constans/app_text_styles.dart';
+import 'package:aplication/app/modules/auth/widgets/snack_bar_widget.dart';
 import 'package:aplication/app/modules/welcom/views/welcome_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class SignInView extends StatelessWidget {
+class SignInView extends StatefulWidget {
   SignInView({Key? key}) : super(key: key);
 
+  @override
+  State<SignInView> createState() => _SignInViewState();
+}
+
+class _SignInViewState extends State<SignInView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final GlobalKey<ScaffoldMessengerState> scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
+
   var emailConroller = TextEditingController();
+
   var passwordConroller = TextEditingController();
+ String? _email;
+  String? _password;
+  bool isVisible = true;
+  bool processing = false;
+  void logIn() async {
+    setState(() {
+      processing = true;
+      
+    });
+    
+    if (_formKey.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _email!,
+          password: _password!,
+        );
+        Navigator.pushReplacementNamed(context, '/customer_page');
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          setState(() {
+            processing = false;
+          });
+          SnackBarWidget.snackBar(
+              'No user found for that email.', scaffoldKey);
+        } else if (e.code == 'wrong-password') {
+          SnackBarWidget.snackBar(
+              'Wrong password provided for that user.', scaffoldKey);
+
+          setState(() {
+            processing = false;
+          });
+        }
+      }
+    } else {
+      setState(() {
+        processing = false;
+      });
+      SnackBarWidget.snackBar('Please fill your blank', scaffoldKey);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +95,9 @@ class SignInView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
+                  onChanged: (value) {
+                    _email = value;
+                  },
                   controller: emailConroller,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -56,6 +109,9 @@ class SignInView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
+                  onChanged: (value) {
+                    _password = value;
+                  },
                   controller: passwordConroller,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -116,12 +172,15 @@ class SignInView extends StatelessWidget {
               SizedBox(
                 height: height * 0.05,
               ),
-              InkWell(
+               processing == true
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.whiteF5,
+                          ),
+                        )
+                      :  InkWell(
                 onTap: () {
-                  // AuthController.instance.login(
-                  //   emailConroller.text.trim(),
-                  //   passwordConroller.text.trim(),
-                  // );
+                 logIn();
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.97,
