@@ -11,8 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ReceiptView extends StatefulWidget {
-   ReceiptView({super.key});
-
+  const ReceiptView({super.key});
 
   @override
   State<ReceiptView> createState() => _ReceiptViewState();
@@ -56,34 +55,23 @@ class _ReceiptViewState extends State<ReceiptView> {
                   padding: const EdgeInsets.only(
                     top: 36,
                   ),
-                  child: Center(
-                    child: Container(
-                      width: sizeWidth * 0.9,
-                      height: sizeHeight * 0.6,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: AppColors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: AppColors.grey,
-                            blurRadius: 6.5,
-                            offset: Offset(0.5, 0.5), // Shadow position
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(AppText.kvi.toUpperCase(),
-                              style: AppTextStyle.S16W700FGen),
-                          SizedBox(
-                            width: sizeWidth * 0.85,
-                            height: sizeHeight * 0.18,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Obx(() => DropdownButton(
-                                      iconSize: 40,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(AppText.kvi.toUpperCase(),
+                            style: AppTextStyle.S16W700FGen),
+                        SizedBox(
+                          width: sizeWidth * 0.85,
+                          height: sizeHeight * 0.18,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Obx(() => SizedBox(
+                                    width: 100,
+                                    child: DropdownButton(
+                                      iconSize: 20,
                                       iconEnabledColor: Colors.red,
                                       iconDisabledColor: Colors.black,
                                       dropdownColor: Colors.yellow.shade400,
@@ -102,164 +90,157 @@ class _ReceiptViewState extends State<ReceiptView> {
                                         _receiptController
                                             .selectedMainCateg(value);
                                       },
-                                    )),
-                                const VerticalDividerWidget(),
-                                Obx(() => DropdownButton(
-                                      iconSize: 40,
-                                      iconEnabledColor: Colors.red,
-                                      iconDisabledColor: Colors.black,
-                                      dropdownColor: Colors.yellow.shade400,
-                                      disabledHint: const Text('~'),
-                                      value: _receiptController
-                                          .subCategValue.value,
-                                      items: _receiptController.subCategList
-                                          .map<DropdownMenuItem<String>>(
-                                              (value) {
-                                        return DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? value) {
-                                        _receiptController.subCategValue.value =
-                                            value!;
-                                      },
-                                    )),
-                                const VerticalDividerWidget(),
-                                Obx(() => DropdownButton(
-                                      iconSize: 40,
-                                      iconEnabledColor: Colors.red,
-                                      iconDisabledColor: Colors.black,
-                                      dropdownColor: Colors.yellow.shade400,
-                                      disabledHint: const Text('~'),
-                                      value: _receiptController
-                                          .lvlCategValue.value,
-                                      items: selectCoursLevel
-                                          .map<DropdownMenuItem<String>>(
-                                              (value) {
-                                        return DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? value) {
-                                        _receiptController.lvlCategValue.value =
-                                            value!;
-                                      },
-                                    )),
-                              ],
-                            ),
+                                    ),
+                                  )),
+                              const VerticalDividerWidget(),
+                              Obx(() => DropdownButton(
+                                    iconSize: 40,
+                                    iconEnabledColor: Colors.red,
+                                    iconDisabledColor: Colors.black,
+                                    dropdownColor: Colors.yellow.shade400,
+                                    disabledHint: const Text('~'),
+                                    value:
+                                        _receiptController.subCategValue.value,
+                                    items: _receiptController.subCategList
+                                        .map<DropdownMenuItem<String>>((value) {
+                                      return DropdownMenuItem(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? value) {
+                                      _receiptController.subCategValue.value =
+                                          value!;
+                                    },
+                                  )),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(_receiptController.formattedTime,
-                                    textAlign: TextAlign.center,
-                                    style: AppTextStyle.w700S16),
-                                const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                ),
-                                Text(_receiptController.formattedDate,
-                                    textAlign: TextAlign.center,
-                                    style: AppTextStyle.w700S16),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 14),
-                            child: TextFormField(
-                              keyboardType: TextInputType.text,
-                              controller:
-                                  _receiptController.firstNameController,
-                              decoration: InputDecoration(
-                                fillColor: AppColors.whiteF5,
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
-                                      color: Colors.blue, width: 2.0),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
-                                      color: AppColors.whiteF5, width: 2.0),
-                                ),
-                                labelText: AppText.name,
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Пожалуйста напишите Имя ученика';
-                                }
-                                return null;
+                        ),
+                        Obx(() => DropdownButton(
+                              iconSize: 20,
+                              iconEnabledColor: Colors.red,
+                              iconDisabledColor: Colors.black,
+                              dropdownColor: Colors.yellow.shade400,
+                              disabledHint: const Text('~'),
+                              value: _receiptController.lvlCategValue.value,
+                              items: selectCoursLevel
+                                  .map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (String? value) {
+                                _receiptController.lvlCategValue.value = value!;
                               },
+                            )),
+                        SizedBox(
+                          height: sizeHeight * 0.1,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(_receiptController.formattedTime,
+                                textAlign: TextAlign.center,
+                                style: AppTextStyle.w700S16),
+                            const SizedBox(
+                              height: 20,
+                              width: 20,
                             ),
+                            Text(_receiptController.formattedDate,
+                                textAlign: TextAlign.center,
+                                style: AppTextStyle.w700S16),
+                          ],
+                        ),
+                        SizedBox(
+                          height: sizeHeight * 0.05,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          controller: _receiptController.firstNameController,
+                          decoration: InputDecoration(
+                            fillColor: AppColors.whiteF5,
+                            filled: true,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Colors.blue, width: 2.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: AppColors.whiteF5, width: 2.0),
+                            ),
+                            labelText: AppText.name,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 26,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Пожалуйста напишите Имя ученика';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: sizeHeight * 0.02,
+                        ),
+                        TextFormField(
+                          controller: _receiptController.amountController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: AppColors.whiteF5,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Colors.blue, width: 2.0),
                             ),
-                            child: TextFormField(
-                              controller: _receiptController.amountController,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: AppColors.whiteF5,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
-                                      color: Colors.blue, width: 2.0),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
-                                      color: AppColors.whiteF5, width: 2.0),
-                                ),
-                                labelText: AppText.price,
-                              ),
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Пожалуйста напишите сумму';
-                                }
-                                return null;
-                              },
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: AppColors.whiteF5, width: 2.0),
                             ),
+                            labelText: AppText.price,
                           ),
-                          InkWell(
-                              onTap: () {
-                                _receiptController.uploadProduct();
-                                // _receiptController.add();
-                              },
-                              // circul == true
-                              //     CircularProgressIndicator(
-                              //         color: Colors.black,
-                              //       )
-                              //     :
-                              child: _receiptController.processing.value == true
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.black,
-                                    )
-                                  : Container(
-                                      height: sizeHeight * 0.065,
-                                      width: sizeWidth * 0.8,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: AppColors.green50,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                            AppText.payment.toUpperCase(),
-                                            style:
-                                                AppTextStyle.whiteS16W700FGen),
-                                      ),
-                                    )),
-                        ],
-                      ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Пожалуйста напишите сумму';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: sizeHeight * 0.08,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              _receiptController.uploadProduct();
+                              // _receiptController.add();
+                            },
+                            // circul == true
+                            //     CircularProgressIndicator(
+                            //         color: Colors.black,
+                            //       )
+                            //     :
+                            child: _receiptController.processing.value == true
+                                ? const CircularProgressIndicator(
+                                    color: Colors.black,
+                                  )
+                                : Container(
+                                    height: sizeHeight * 0.065,
+                                    width: sizeWidth * 0.9,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: AppColors.green50,
+                                    ),
+                                    child: Center(
+                                      child: Text(AppText.payment.toUpperCase(),
+                                          style: AppTextStyle.whiteS16W700FGen),
+                                    ),
+                                  )),
+                      ],
                     ),
                   ),
                 ),
@@ -272,4 +253,4 @@ class _ReceiptViewState extends State<ReceiptView> {
   }
 }
 
-ReceiptView receiptView =  ReceiptView();
+ReceiptView receiptView = const ReceiptView();

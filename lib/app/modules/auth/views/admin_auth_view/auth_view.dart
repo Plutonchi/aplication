@@ -32,8 +32,8 @@ class AuthView extends GetView<AuthController> {
               child: SingleChildScrollView(
                 child: Column(children: [
                   Container(
-                   height: height * 0.45,
-                  width: width * 0.9,
+                    height: height * 0.3,
+                    width: width * 0.9,
                     decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                         borderRadius: const BorderRadius.only(
@@ -107,7 +107,36 @@ class AuthView extends GetView<AuthController> {
                         )),
                   ),
                   const SizedBox(
-                    height: 120,
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 150),
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text("Did you choose the wrong category?",
+                            textAlign: TextAlign.center,
+                            style: AppTextStyle.w600Gen14),
+                            const SizedBox(height: 0.1,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 55),
+                      child: TextButton(
+                        onPressed: () {
+                          Get.to(WelcomeView());
+                        },
+                        child: const Text(
+                          "Back in welcome screen",
+                          style: AppTextStyle.w500Gen15,
+                        ),
+                      ),
+                    ),
+                      ],
+                    ),
+                  ),
+                 
+                  SizedBox(
+                    height: height * 0.1,
                   ),
                   InkWell(
                     onTap: () {
@@ -117,8 +146,8 @@ class AuthView extends GetView<AuthController> {
                       );
                     },
                     child: Container(
-                      width: double.infinity,
-                      height: 60,
+                      width: width * 0.95,
+                      height: height * 0.07,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.black53,

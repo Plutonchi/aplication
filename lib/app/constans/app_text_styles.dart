@@ -60,8 +60,17 @@ static const TextStyle blackBlod20 = TextStyle(
                                   fontFamily: "Gentium",
                                   fontWeight: FontWeight.w500,
                                 );
+                                 static const TextStyle w500Gen15 = TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: "Gentium",
+                                  fontWeight: FontWeight.w500,
+                                );
                                  static const TextStyle w600Gen16 = TextStyle(
                                   fontSize: 16,
+                                  fontFamily: "Gentium",
+                                  fontWeight: FontWeight.w600,
+                                );static const TextStyle w600Gen14 = TextStyle(
+                                  fontSize: 14,
                                   fontFamily: "Gentium",
                                   fontWeight: FontWeight.w600,
                                 );

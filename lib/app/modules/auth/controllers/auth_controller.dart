@@ -1,11 +1,9 @@
-import 'dart:developer';
+// ignore_for_file: avoid_print, unused_field
 
-import 'package:aplication/app/modules/auth/views/admin_auth_view/auth_view.dart';
-import 'package:aplication/app/modules/auth/widgets/snack_bar_widget.dart';
-import 'package:aplication/app/modules/home/controllers/home_controller.dart';
+import 'package:aplication/app/modules/auth/views/teachers_auth_views/signIn_view.dart';
 import 'package:aplication/app/modules/home/views/home_view.dart';
 import 'package:aplication/app/modules/home/widgets/custom_snack_bar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:aplication/app/modules/welcom/views/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,8 +16,8 @@ class AuthController extends GetxController {
   Rx<String> password = ''.obs;
   Rx<String> eMail = ''.obs;
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldMessengerState> scaffoldKey =
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldMessengerState> scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
 
   var emailConroller = TextEditingController();
@@ -35,12 +33,34 @@ class AuthController extends GetxController {
   // }
 
   RxBool processing = false.obs;
-  RxString _uid = ''.obs;
+
   RxString name = ''.obs;
-  
+
+  void register(email, password) async {
+    try {
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => Get.to(HomeView()));
+      customSnackBar('Success', '', '');
+    } catch (e) {
+      Get.snackbar(
+        'About Register',
+        "",
+        backgroundColor: Colors.redAccent,
+        snackPosition: SnackPosition.TOP,
+        titleText: const Text("Registration failed",
+            style: TextStyle(color: Colors.white)),
+      );
+      print(e);
+    }
+  }
+
   void login(String email, password) async {
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      await auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => Get.to(HomeView()));
+      ;
       customSnackBar('Success', '', '');
     } catch (e) {
       Get.snackbar(
@@ -63,7 +83,7 @@ class AuthController extends GetxController {
   //   if (user == null) {
   //     print("LoginPage");
   //     Get.offAll(
-  //       AuthView(),
+  //       SignInView(),
   //     );
   //   } else {
   //     Get.offAll(
@@ -73,7 +93,7 @@ class AuthController extends GetxController {
   // }
 }
 
-extension EmailValidator on String {
+extension EmailValidato on String {
   bool isValidEmail() {
     return RegExp(r'^([a-zA-Z0-9]+)([@])([a-zA-Z0-9]+)([\-\_\.])([a-z]{2,3})$')
         .hasMatch(this);

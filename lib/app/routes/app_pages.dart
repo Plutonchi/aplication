@@ -32,7 +32,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.RECEIPT,
-      page: () =>  ReceiptView(),
+      page: () =>  const ReceiptView(),
       binding: ReceiptBinding(),
     ),
     GetPage(

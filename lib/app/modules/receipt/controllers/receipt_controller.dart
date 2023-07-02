@@ -1,25 +1,14 @@
+// ignore_for_file: unrelated_type_equality_checks
 
-// import 'package:aplication/app/model/invoice_model.dart';
 import 'package:aplication/app/utils/categ_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-// import 'package:aplication/app/utils/categ_list.dart';
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-// import 'package:uuid/uuid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uuid/uuid.dart';
 
 class ReceiptController extends GetxController {
-  final FirebaseStorage storage;
-  final Reference storageRef;
-
-  ReceiptController()
-      : storage = FirebaseStorage.instance,
-        storageRef = FirebaseStorage.instance.ref().child('texts');
-
   var formattedTime = DateFormat('HH:mm').format(DateTime.now());
   var formattedDate = DateFormat('dd/ MM  /y').format(DateTime.now());
 
@@ -36,7 +25,7 @@ class ReceiptController extends GetxController {
 
   add() {
     if (index.value == index.value) {
-      return index.value ++;
+      return index.value++;
     }
   }
 
@@ -69,7 +58,8 @@ class ReceiptController extends GetxController {
       ),
     );
   }
-    RxString uid =  const Uuid().v4().obs;
+
+  RxString uid = const Uuid().v4().obs;
 
   void addInvoice() async {
     String formattedData = DateFormat('dd-MM-yyyy').format(DateTime.now());

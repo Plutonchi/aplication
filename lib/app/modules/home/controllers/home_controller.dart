@@ -49,7 +49,7 @@ class HomeController extends GetxController {
   void navigateToReceiptView(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>  ReceiptView()),
+      MaterialPageRoute(builder: (context) =>  const ReceiptView()),
     );
   }
 

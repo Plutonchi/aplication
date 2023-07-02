@@ -11,6 +11,7 @@ abstract class Routes {
   static const RECEIPT = _Paths.RECEIPT;
   // ignore: constant_identifier_names
   static const CATEGORIES = _Paths.CATEGORIES;
+  // ignore: constant_identifier_names
   static const WELCOME = _Paths.WELCOME;
 }
 
@@ -24,5 +25,6 @@ abstract class _Paths {
   static const RECEIPT = '/receipt';
   // ignore: constant_identifier_names
   static const CATEGORIES = '/categories';
+  // ignore: constant_identifier_names
   static const WELCOME = "/welcome";
 }
